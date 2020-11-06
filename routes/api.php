@@ -13,4 +13,4 @@ Route::resource("/todos", TodosController::class)->only(['index', 'show', 'store
 
 
 Route::post('/login', [LoginController::class, "login"]);
-
+Route::post('/logout', [LoginController::class, "logout"]);
