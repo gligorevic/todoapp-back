@@ -23,4 +23,11 @@ class LoginController extends Controller
 
         return response()->json(['message' => 'Successfully logged out']);
     }
+
+    public function refresh(Request $request)
+    {
+        $token = $request->bearerToken();
+        if($token == null) return response()->json(["error"=> "Unauthorized"], 401);
+        return response()->json(auth()->refresh());
+    }
 }
