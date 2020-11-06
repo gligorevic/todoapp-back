@@ -7,6 +7,11 @@ use App\Models\Todo;
 
 class TodosController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('customAuth');
+    }
+
     /**
      * Display a listing of the resource.
      *
