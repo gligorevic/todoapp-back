@@ -33,7 +33,7 @@ class TodosController extends Controller
     public function store(Request $request)
     {
         $request->validate(["task" => "required|max:255"]);
-        $todo = new Todo(['task' => $request->get('task')]);
+        $todo = new Todo(['task' => $request->get('task'), 'completed' => false]);
         auth()->user()->todos()->save($todo);
 
         return response()->json($todo, 201);
