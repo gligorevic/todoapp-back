@@ -61,20 +61,40 @@ class TodosController extends Controller
         return $todo;
     }
 
-    public function updateMany(Request $request) {
-        $todos = $request->get('todos');
-        $ids = array_column($todos, 'id');
-        $foundTodos = Todo::whereIn('id', $ids)->get();
+    private function canUserUpdateTodos($todos) {
+        $user_ids = array_column($todos, 'user_id');
+        $user = auth()->user();
 
+        foreach ($user_ids as $user_id) {
+            if($user->id !== $user_id) return response()->json(['error' => "Unatuhorized"], 401);
+        }
+    }
+
+    private function mapTodosToIds($todos) {
         $todosMap = array();
+
         foreach ($todos as $todo) {
             $castedTodo = (object) $todo;
             $todosMap += [$castedTodo->id => $castedTodo];
         }
 
+        return $todosMap;
+    }
+
+    private function updateTodos($todos, $todosMap) {
+        $ids = array_column($todos, 'id');
+        $foundTodos = Todo::whereIn('id', $ids)->get();
         foreach ($foundTodos as $todoToUpdate) {
             $todoToUpdate->update(['order' => $todosMap[$todoToUpdate->id]->order, 'priority' => $todosMap[$todoToUpdate->id]->priority]);
         }
+    }
+
+    public function updateMany(Request $request) {
+        $todos = $request->get('todos');
+
+        $this->canUserUpdateTodos($todos);
+        $todosMap = $this->mapTodosToIds($todos);
+        $this->updateTodos($todos, $todosMap);
 
         return $todosMap;
     }
