@@ -9,6 +9,10 @@ class Todo extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'task'
+    ];
+
     public function user(){
         return $this->belongsTo('App\Models\User');
     }

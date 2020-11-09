@@ -19,7 +19,7 @@ class TodosController extends Controller
      */
     public function index()
     {
-        return response()->json(Todo::all());
+        return response()->json(auth()->user()->todos);
     }
 
 
@@ -32,18 +32,11 @@ class TodosController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate(["task" => "required|max:255"]);
+        $todo = new Todo(['task' => $request->get('task')]);
+        auth()->user()->todos()->save($todo);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        return response()->json($todo, 201);
     }
 
 
@@ -56,7 +49,16 @@ class TodosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $todo = Todo::find($id);
+        if($todo === null) return response()->json(["error" => "Bad request"], 404);
+
+        $user = auth()->user();
+        if($todo->user->id !== $user->id) return response()->json(["error" => "Bad request"], 404);
+
+        $request->validate(["task" => "required|max:255"]);
+        $todo->update(['task' => $request->get('task'), 'completed' => $request->get('completed')]);
+
+        return $todo;
     }
 
     /**
@@ -67,6 +69,15 @@ class TodosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $todo = Todo::find($id);
+        if($todo === null) return response()->json(["error" => "Bad request"], 404);
+
+        $user = auth()->user();
+        if($todo->user->id !== $user->id) return response()->json(["error" => "Bad request"], 404);
+
+        $todo->delete();
+
+        return response()->json([],200);
+
     }
 }

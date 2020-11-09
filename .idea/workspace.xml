@@ -21,7 +21,11 @@
   <component name="ChangeListManager">
     <list default="true" id="e496356f-b294-405a-bda2-93db6fd324a1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/AuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/AuthController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TodosController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TodosController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Todo.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Todo.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/factories/TodoFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/TodoFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_11_06_115544_create_todos_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_11_06_115544_create_todos_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -179,7 +183,7 @@
       <workItem from="1604762378269" duration="1075000" />
       <workItem from="1604787910924" duration="607000" />
       <workItem from="1604832085859" duration="1521000" />
-      <workItem from="1604908400789" duration="2460000" />
+      <workItem from="1604908400789" duration="8580000" />
     </task>
     <servers />
   </component>
