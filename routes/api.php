@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\TodosController;
-use \App\Http\Controllers\Auth\LoginController;
+use \App\Http\Controllers\Auth\AuthController;
 use \App\Http\Controllers\UsersController;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
@@ -13,9 +13,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::resource("/todos", TodosController::class)->only(['index', 'show', 'store', 'destroy']);
 
 
-Route::post('/login', [LoginController::class, "login"]);
-Route::post('/logout', [LoginController::class, "logout"])->middleware('customAuth');
-Route::post('/refresh', [LoginController::class, "refresh"]); //->middleware('customAuth')
+Route::post('/login', [AuthController::class, "login"]);
+Route::post('/register', [AuthController::class, "register"]);
+Route::post('/logout', [AuthController::class, "logout"]);
+Route::post('/refresh', [AuthController::class, "refresh"])->middleware("userHasToken");
 
 
 Route::get("/users", [UsersController::class, "show"]);
