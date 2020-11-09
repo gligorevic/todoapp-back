@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\RegistrationRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -42,7 +41,7 @@ class AuthController extends Controller
 
     }
 
-    public function register(RegistrationRequest $request)
+    public function register(Request $request)
     {
         $request->validate([
         'email' => 'required|unique:users|email|max:255',
