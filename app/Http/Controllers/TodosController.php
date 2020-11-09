@@ -19,7 +19,7 @@ class TodosController extends Controller
      */
     public function index()
     {
-        return response()->json(auth()->user()->todos);
+        return response()->json(auth()->user()->todos()->orderBy('order', 'ASC')->get());
     }
 
 
@@ -32,8 +32,8 @@ class TodosController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate(["task" => "required|max:255"]);
-        $todo = new Todo(['task' => $request->get('task'), 'completed' => false, 'priority' => 'low']);
+        $request->validate(["task" => "required|max:255", 'order' => 'required']);
+        $todo = new Todo(['task' => $request->get('task'), 'completed' => false, 'priority' => 'low', 'order' => $request->get('order')]);
         auth()->user()->todos()->save($todo);
 
         return response()->json($todo, 201);
@@ -61,6 +61,23 @@ class TodosController extends Controller
         return $todo;
     }
 
+    public function updateMany(Request $request) {
+        $todos = $request->get('todos');
+        $ids = array_column($todos, 'id');
+        $foundTodos = Todo::whereIn('id', $ids)->get();
+
+        $todosMap = array();
+        foreach ($todos as $todo) {
+            $castedTodo = (object) $todo;
+            $todosMap += [$castedTodo->id => $castedTodo];
+        }
+
+        foreach ($foundTodos as $todoToUpdate) {
+            $todoToUpdate->update(['order' => $todosMap[$todoToUpdate->id]->order, 'priority' => $todosMap[$todoToUpdate->id]->priority]);
+        }
+
+        return $todosMap;
+    }
     /**
      * Remove the specified resource from storage.
      *

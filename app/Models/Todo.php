@@ -12,7 +12,8 @@ class Todo extends Model
     protected $fillable = [
         'task',
         'completed',
-        'priority'
+        'priority',
+        'order'
     ];
 
     public function user(){

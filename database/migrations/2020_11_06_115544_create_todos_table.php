@@ -17,6 +17,7 @@ class CreateTodosTable extends Migration
             $table->id();
             $table->mediumText("task");
             $table->enum('priority', ['low', 'medium', 'heigh']);
+            $table->integer('order');
             $table->boolean("completed")->default(false);
             $table->integer("user_id");
             $table->timestamps();
