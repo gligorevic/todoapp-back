@@ -33,7 +33,7 @@ class TodosController extends Controller
     public function store(Request $request)
     {
         $request->validate(["task" => "required|max:255"]);
-        $todo = new Todo(['task' => $request->get('task'), 'completed' => false]);
+        $todo = new Todo(['task' => $request->get('task'), 'completed' => false, 'priority' => 'low']);
         auth()->user()->todos()->save($todo);
 
         return response()->json($todo, 201);
@@ -56,7 +56,7 @@ class TodosController extends Controller
         if($todo->user->id !== $user->id) return response()->json(["error" => "Bad request"], 404);
 
         $request->validate(["task" => "required|max:255"]);
-        $todo->update(['task' => $request->get('task'), 'completed' => $request->get('completed')]);
+        $todo->update(['task' => $request->get('task'), 'completed' => $request->get('completed'), 'priority' => $request->get('priority')]);
 
         return $todo;
     }
