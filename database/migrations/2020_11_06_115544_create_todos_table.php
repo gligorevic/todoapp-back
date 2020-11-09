@@ -16,7 +16,7 @@ class CreateTodosTable extends Migration
         Schema::create('todos', function (Blueprint $table) {
             $table->id();
             $table->mediumText("task");
-            $table->enum('priority', ['low', 'medium', 'heigh']);
+            $table->enum('priority', ['low', 'medium', 'high']);
             $table->integer('order');
             $table->boolean("completed")->default(false);
             $table->integer("user_id");
